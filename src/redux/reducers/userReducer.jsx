@@ -1,28 +1,32 @@
+import _ from 'lodash';
+import Swal from 'sweetalert2';
 const initialState = {
-	userList: [
-		{
-			values: {
-				id: '',
-				fullName: '',
-				phone: '',
-				email: '',
-			},
-			errors: {
-				id: '',
-				fullName: '',
-				phone: '',
-				email: '',
-			},
-			valid: false,
-		},
-	],
+	userList: [],
 };
 
 export const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'ADD_USER': {
-			console.log(action.payload);
-			return state;
+			let newState = _.cloneDeep(state);
+
+			let userClone = _.cloneDeep(newState.userList);
+
+			let idx = userClone.findIndex(
+				user => user.id === action.payload.values.id,
+			);
+			if (idx === -1) {
+				userClone.push(action.payload.values);
+			} else {
+				Swal.fire({
+					position: 'center',
+					icon: 'errors',
+					title: 'User id exits',
+					showConfirmButton: false,
+					timer: 1500,
+				});
+			}
+			newState.userList = userClone;
+			return { ...newState };
 		}
 		case 'DELETE_USER': {
 			return state;
@@ -31,6 +35,6 @@ export const userReducer = (state = initialState, action) => {
 			return state;
 		}
 		default:
-			return state;
+			return { ...state };
 	}
 };

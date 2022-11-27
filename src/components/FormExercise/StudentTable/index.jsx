@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 
 class StudentTable extends Component {
 	render() {
+		let { userList } = this.props.userList;
 		return (
 			<div className='mt-2'>
 				<table className='table'>
@@ -16,20 +17,37 @@ class StudentTable extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th>1</th>
-							<td>Larry the Bird</td>
-							<td>0917565841</td>
-							<td>nguyenvana@gmail</td>
-							<td>
-								<button className='btn btn-danger mx-1'>
-									<i className='fa-solid fa-trash'></i>
-								</button>
-								<button className='btn btn-warning mx-2'>
-									<i className='fa-solid fa-user-pen'></i>
-								</button>
-							</td>
-						</tr>
+						{userList && userList.length > 0 ? (
+							userList.map((user, index) => {
+								let { id, fullName, phone, email } = user;
+								return (
+									<tr key={index}>
+										<th>{id}</th>
+										<td>{fullName}</td>
+										<td>{phone}</td>
+										<td>{email}</td>
+										<td>
+											<button className='btn btn-danger mx-1'>
+												<i className='fa-solid fa-trash'></i>
+											</button>
+											<button className='btn btn-warning mx-2'>
+												<i className='fa-solid fa-user-pen'></i>
+											</button>
+										</td>
+									</tr>
+								);
+							})
+						) : (
+							<tr>
+								<th
+									colSpan={5}
+									className='text-center'
+									style={{ color: 'gray' }}
+								>
+									Empty data
+								</th>
+							</tr>
+						)}
 					</tbody>
 				</table>
 			</div>
@@ -37,6 +55,8 @@ class StudentTable extends Component {
 	}
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+	userList: state.userReducer,
+});
 
 export default connect(mapStateToProps)(StudentTable);

@@ -38,7 +38,7 @@ class StudentForm extends Component {
 					messageError = `Please enter a valid phone number.`;
 				}
 			} else if (type === 'email') {
-				let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+				let regex = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/;
 				if (!regex.test(value)) {
 					messageError = `Please enter a valid email address!`;
 				}
