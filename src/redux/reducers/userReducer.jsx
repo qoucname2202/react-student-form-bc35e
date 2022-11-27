@@ -12,14 +12,14 @@ export const userReducer = (state = initialState, action) => {
 			let userClone = _.cloneDeep(newState.userList);
 
 			let idx = userClone.findIndex(
-				user => user.id === action.payload.values.id,
+				user => user.values.id === action.payload.values.id,
 			);
 			if (idx === -1) {
-				userClone.push(action.payload.values);
+				userClone.push(action.payload);
 			} else {
 				Swal.fire({
 					position: 'center',
-					icon: 'errors',
+					icon: 'error',
 					title: 'User id exits',
 					showConfirmButton: false,
 					timer: 1500,

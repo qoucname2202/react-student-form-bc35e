@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
+
+const initialState = {
+	values: {
+		id: '',
+		fullName: '',
+		phone: '',
+		email: '',
+	},
+	errors: {
+		id: '',
+		fullName: '',
+		phone: '',
+		email: '',
+	},
+	valid: false,
+};
 class StudentForm extends Component {
 	constructor(props) {
 		super(props);
@@ -104,6 +120,9 @@ class StudentForm extends Component {
 			type: 'ADD_USER',
 			payload: this.state,
 		};
+		this.setState({
+			...initialState,
+		});
 		this.props.dispatch(action);
 	};
 	render() {
@@ -130,6 +149,7 @@ class StudentForm extends Component {
 											placeholder='Eg. 18DTHB2'
 											autoComplete='off'
 											onInput={this.handelOnInputChange}
+											value={this.state.values.id}
 										></input>
 										{this.state.errors.id !== '' && (
 											<div className='alert alert-danger mt-2'>
@@ -151,6 +171,7 @@ class StudentForm extends Component {
 											placeholder='Eg. Nguyễn Văn A'
 											autoComplete='off'
 											onInput={this.handelOnInputChange}
+											value={this.state.values.fullName}
 										></input>
 										{this.state.errors.fullName !== '' && (
 											<div className='alert alert-danger mt-2'>
@@ -172,6 +193,7 @@ class StudentForm extends Component {
 											placeholder='Eg. 0917565841'
 											autoComplete='off'
 											onInput={this.handelOnInputChange}
+											value={this.state.values.phone}
 										></input>
 										{this.state.errors.phone !== '' && (
 											<div className='alert alert-danger mt-2'>
@@ -193,6 +215,7 @@ class StudentForm extends Component {
 											placeholder='Eg. nguyenvana@gmail.com'
 											autoComplete='off'
 											onInput={this.handelOnInputChange}
+											value={this.state.values.email}
 										></input>
 										{this.state.errors.email !== '' && (
 											<div className='alert alert-danger mt-2'>
