@@ -1,6 +1,27 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+class Header extends Component {
+	constructor(props) {
+		super(props);
 
-export default class Header extends Component {
+		this.state = {
+			keyword: '',
+		};
+	}
+	handelChange = e => {
+		this.setState({
+			keyword: e.target.value,
+		});
+	};
+	handelSubmit = e => {
+		e.preventDefault();
+		const action = {
+			type: 'FILTER_USER',
+			payload: this.state.keyword,
+		};
+		this.props.dispatch(action);
+	};
+
 	render() {
 		return (
 			<>
@@ -28,12 +49,17 @@ export default class Header extends Component {
 							id='navbarSupportedContent'
 						>
 							<div className='navbar-nav me-auto mb-2 mb-lg-0'></div>
-							<form className='d-flex' role='search'>
+							<form
+								className='d-flex'
+								role='search'
+								onSubmit={this.handelSubmit}
+							>
 								<input
 									className='form-control me-2'
 									type='search'
 									placeholder='Search'
 									aria-label='Search'
+									onChange={this.handelChange}
 								/>
 								<button
 									className='btn btn-outline-secondary text-white'
@@ -49,3 +75,7 @@ export default class Header extends Component {
 		);
 	}
 }
+
+const mapStateToProps = state => ({});
+
+export default connect(mapStateToProps)(Header);

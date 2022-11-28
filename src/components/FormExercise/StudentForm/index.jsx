@@ -120,10 +120,10 @@ class StudentForm extends Component {
 			type: 'ADD_USER',
 			payload: this.state,
 		};
+		this.props.dispatch(action);
 		this.setState({
 			...initialState,
 		});
-		this.props.dispatch(action);
 	};
 	render() {
 		// console.log(this.props.user);

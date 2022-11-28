@@ -27,7 +27,16 @@ class StudentTable extends Component {
 										<td>{phone}</td>
 										<td>{email}</td>
 										<td>
-											<button className='btn btn-danger mx-1'>
+											<button
+												className='btn btn-danger mx-1'
+												onClick={() => {
+													const action = {
+														type: 'DELETE_USER',
+														payload: id,
+													};
+													this.props.dispatch(action);
+												}}
+											>
 												<i className='fa-solid fa-trash'></i>
 											</button>
 											<button className='btn btn-warning mx-2'>
