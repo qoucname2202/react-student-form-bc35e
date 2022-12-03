@@ -44,31 +44,22 @@ export const userReducer = (state = initialState, action) => {
 		}
 		case 'DELETE_USER': {
 			let newState = _.cloneDeep(state);
-			// let userClone = _.cloneDeep(newState.userList);
-			// let idx = userClone.findIndex(user => user.values.id === action.payload);
-			// if (idx !== -1) {
-			// 	userClone.splice(idx, 1);
-			// }
-			// newState.userList = userClone;
+			let userClone = _.cloneDeep(newState.userList);
+			console.log(userClone);
+			console.log(action.payload);
+			let idx = userClone.findIndex(user => user.id === action.payload);
+			console.log(idx);
+			if (idx !== -1) {
+				userClone.splice(idx, 1);
+			}
+			newState.userList = userClone;
 			return { ...newState };
 		}
 		case 'UPDATE_USER': {
 			return state;
 		}
 		case 'FILTER_USER': {
-			let newState = _.cloneDeep(state);
-			let userClone = _.cloneDeep(newState.userList);
-			let newUserClone = [...userClone];
-			if (action.payload === '') {
-				newState.userList = newUserClone;
-			} else {
-				let filterUser = userClone.filter(user => {
-					user = removeAccents(user.values.fullName);
-					return user.indexOf(removeAccents(action.payload)) > -1;
-				});
-				newState.userList = filterUser;
-			}
-			return { ...newState };
+			return state;
 		}
 		default:
 			return { ...state };
