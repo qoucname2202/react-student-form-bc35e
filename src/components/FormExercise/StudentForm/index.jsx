@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
-
+import { cloneDeep } from 'lodash';
 const initialState = {
 	values: {
 		id: '',
@@ -118,12 +118,12 @@ class StudentForm extends Component {
 		}
 		const action = {
 			type: 'ADD_USER',
-			payload: this.state,
+			payload: this.state.values,
 		};
-		this.props.dispatch(action);
 		this.setState({
-			...initialState,
+			...cloneDeep(initialState),
 		});
+		this.props.dispatch(action);
 	};
 	render() {
 		// console.log(this.props.user);

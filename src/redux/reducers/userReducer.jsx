@@ -2,7 +2,7 @@ import _ from 'lodash';
 import Swal from 'sweetalert2';
 const initialState = {
 	userList: [],
-	newUser: [],
+	userName: '',
 };
 
 const removeAccents = str => {
@@ -17,7 +17,7 @@ const removeAccents = str => {
 	str = str
 		.toLowerCase()
 		.trim()
-		.replace(/[^a-z0-9\-]/g, '-')
+		.replace(/[^a-z0-9-]/g, '-')
 		.replace(/-+/g, '-');
 	return str;
 };
@@ -25,13 +25,11 @@ const removeAccents = str => {
 export const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'ADD_USER': {
-			let newState = _.cloneDeep(state);
-			let userClone = _.cloneDeep(newState.userList);
-			let idx = userClone.findIndex(
-				user => user.values.id === action.payload.values.id,
-			);
+			let newState = { ...state };
+			let newUser = [...newState.userList];
+			let idx = newUser.findIndex(user => user.id === action.payload.id);
 			if (idx === -1) {
-				userClone.push(action.payload);
+				newUser.push(action.payload);
 			} else {
 				Swal.fire({
 					position: 'center',
@@ -41,17 +39,17 @@ export const userReducer = (state = initialState, action) => {
 					timer: 1500,
 				});
 			}
-			newState.userList = userClone;
+			newState.userList = newUser;
 			return { ...newState };
 		}
 		case 'DELETE_USER': {
 			let newState = _.cloneDeep(state);
-			let userClone = _.cloneDeep(newState.userList);
-			let idx = userClone.findIndex(user => user.values.id === action.payload);
-			if (idx !== -1) {
-				userClone.splice(idx, 1);
-			}
-			newState.userList = userClone;
+			// let userClone = _.cloneDeep(newState.userList);
+			// let idx = userClone.findIndex(user => user.values.id === action.payload);
+			// if (idx !== -1) {
+			// 	userClone.splice(idx, 1);
+			// }
+			// newState.userList = userClone;
 			return { ...newState };
 		}
 		case 'UPDATE_USER': {

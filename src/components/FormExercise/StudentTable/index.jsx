@@ -19,7 +19,7 @@ class StudentTable extends Component {
 					<tbody>
 						{userList && userList.length > 0 ? (
 							userList.map((user, index) => {
-								let { id, fullName, phone, email } = user.values;
+								let { id, fullName, phone, email } = user;
 								return (
 									<tr key={index}>
 										<th>{id}</th>
